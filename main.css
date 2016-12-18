@@ -1,0 +1,31 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: lightgoldenrodyellow;
+    padding: 20px;
+    --card-width: 120px;
+    --card-count: 4;
+}
+
+@media only screen and (min-width: 850px) {
+    body {
+        --card-count: 6;
+    }
+}
+
+app-cards {
+    margin: 0 auto;
+    box-sizing: content-box;
+    display: flex;
+    flex-flow: row wrap;
+    border: 2px solid lightgreen;
+    width: calc( ( var(--card-width) + 10px) * var(--card-count) );
+}
+
+app-card {
+    display: block;
+    width: var(--card-width);
+    height: var(--card-width);
+}
