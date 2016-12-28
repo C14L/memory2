@@ -1,0 +1,80 @@
+
+<template>
+    <style>
+        #counter {
+            display: flex;
+            flex-flow: 0 0 auto;
+            position: fixed;
+            right: 0; bottom: 0; left: 0;
+            background-color: black;
+            opacity: 0.9;
+            font-family: sans-serif;
+            font-size: 48px;
+            line-height: 96px;
+            color: white;
+            text-align: center;
+        }
+
+        #counter > div {
+            width: 33%;
+        }
+
+        #counter > div + div {
+            border-left: 1px dotted rgba(255,255,255,0.48);
+        }
+    </style>
+    <div id="counter">
+        <div id="count">0</div>
+        <div id="match">0</div>
+        <div id="time">0</div>
+    </div>
+</template>
+
+<script>
+
+"use strict";
+
+customElements.define('app-counter', class extends HTMLElement {
+
+    static get observedAttributes () {
+        return ['count', 'match', 'time'];
+    }
+
+    constructor () {
+        super();
+
+        const tpl = document.currentScript.ownerDocument.querySelector('template');
+        this._shadowRoot = this.attachShadow({mode: 'open'});
+        this._shadowRoot.appendChild(tpl.content.cloneNode(true));
+
+        this._countEl = this._shadowRoot.getElementById('count');
+        this._matchEl = this._shadowRoot.getElementById('match');
+        this._timeEl = this._shadowRoot.getElementById('time');
+    }
+
+    connectedCallback () {
+    }
+
+    disconnectedCallback () {
+    }
+
+    attributeChangedCallback (name, oldValue, newValue) {
+        if (name === 'count') {
+            this._countEl.innerHTML = newValue;
+        }
+        if (name === 'match') {
+            this._matchEl.innerHTML = newValue;
+        }
+        if (name === 'time' && newValue == "1") {
+            this.startTimer();
+        }
+    }
+
+    startTimer () {
+        let t = 0;
+        setInterval(() => { this._timeEl.innerHTML = ++t; }, 1000);
+    }
+
+});
+
+</script>

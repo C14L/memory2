@@ -10,9 +10,12 @@ customElements.define('app-cards', class extends HTMLElement {
         super();
         const doc = document.currentScript.ownerDocument;
 
-        this._cardNames = this.attributes.getNamedItem('pics').value.split(/\s*[,;]\s*/);
-        this._cardPairs = this.getCardNamesFromItemNames(this._cardNames);
-        this._cardPics = this.getRandomCards(this._cardNames);
+        this._appCounterEl = doc.getElementsByTagName('app-counter')[0];
+        console.log(this._appCounterEl);
+
+        this._itemNames = this.attributes.getNamedItem('pics').value.split(/\s*[,;]\s*/);
+        this._cardPairs = this.getCardNamesFromItemNames(this._itemNames);
+        this._cardPics = this.getRandomCards(this._itemNames);
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this._cardEls = [];
 
@@ -70,10 +73,19 @@ customElements.define('app-cards', class extends HTMLElement {
 
         // Otherwise, the clicked card is revealed.
         if (this.revealCard(event.target)) {
-            // Check if the 2 revealed cards match.
+            // Check if that was the second card to be revealed.
             if (this.revealedCount === 2) {
+                // If so, count another pair revealed.
+                let ctr = parseInt(this._appCounterEl.getAttribute('count'));
+                this._appCounterEl.setAttribute('count', ctr + 1);
+
+                // Check if the revealed cards match.
                 const matchName = this.checkForMatch();
                 if (matchName) {
+                    // Count the match
+                    let ctr = parseInt(this._appCounterEl.getAttribute('match'));
+                    this._appCounterEl.setAttribute('match', ctr + 1);
+                    // and remove the pair.
                     this.removeCards(matchName);
                 }
             }
@@ -85,11 +97,10 @@ customElements.define('app-cards', class extends HTMLElement {
      * if those cards are a match. Return true if they match.
      */
     checkForMatch () {
-        console.log(this.revealedCards);
         const cards = this.revealedCards;
-        const name1 = cards[0].getAttribute('pic');
-        const name2 = cards[1].getAttribute('pic');
-        return name1.split('-')[0] === name2.split('-')[0] ? name2.split('-')[0] : false;
+        const name1 = cards[0] && cards[0].getAttribute('pic');
+        const name2 = cards[1] && cards[1].getAttribute('pic');
+        return name1 && name2 && name1.split('-')[0] === name2.split('-')[0] ? name2.split('-')[0] : false;
     }
 
     /**

@@ -10,7 +10,7 @@ customElements.define('app-card', class extends HTMLElement {
         super();
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this._shadowRoot.innerHTML = `
-            <link rel="stylesheet" type="text/css" href="card.css">
+            <link rel="stylesheet" type="text/css" href="app-card.css">
             <div id="card">
                 <div id="shadow"></div>
                 <div id="front"></div>
@@ -31,7 +31,14 @@ customElements.define('app-card', class extends HTMLElement {
 
     attributeChangedCallback (name, oldValue, newValue) {
         if (name == 'show') {
-            this._card.setAttribute(name, newValue);
+            if (newValue == 'removed') {
+                setTimeout(() => {
+                    // Let the second card turn first, then remove.
+                    this._card.setAttribute(name, newValue);
+                }, 800);
+            } else {
+                this._card.setAttribute(name, newValue);
+            }
         }
     }
 
