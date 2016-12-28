@@ -13,9 +13,9 @@ customElements.define('app-cards', class extends HTMLElement {
         this._appCounterEl = doc.getElementsByTagName('app-counter')[0];
         console.log(this._appCounterEl);
 
-        this._itemNames = this.attributes.getNamedItem('pics').value.split(/\s*[,;]\s*/);
-        this._cardPairs = this.getCardNamesFromItemNames(this._itemNames);
-        this._cardPics = this.getRandomCards(this._itemNames);
+        this._itemNames = this.attributes.getNamedItem('pics').value.split(' '); // [dog, cat, ...] etc.
+        this._cardPairs = this.getCardNamesFromItemNames(this._itemNames); // [dog-1, dog-2, cat-1, ...] etc.
+        this._cardPics = this.shuffleArray(this._cardPairs);
         this._shadowRoot = this.attachShadow({mode: 'open'});
         this._cardEls = [];
 
@@ -152,15 +152,6 @@ customElements.define('app-cards', class extends HTMLElement {
             arr.push(names[i] + '-2');
         }        
         return arr;
-    }
-
-    /**
-     * Receives an array of item names and returns all card pairs
-     * in random order.
-     */
-    getRandomCards (names) {
-        let arr = this.getCardNamesFromItemNames(names);
-        return this.shuffleArray(arr);
     }
 
     /**

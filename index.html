@@ -3,54 +3,39 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>Memory2</title>
-
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        
-        <link rel="stylesheet" href="main.css">
-        <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="canonical" href="https://C14L.com/memory2/">
-        
-        <link rel="import" href="app-counter.html">
-
+        <meta name="viewport" content="width=device-width initial-scale=1 user-scalable=no">
         <meta name="theme-color" content="#f04530">
-        <meta name="description" content="">
+
+        <title>Memory2</title>
         
-        <meta itemprop="name" content="">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="">
-        
-        <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@C14Lcom">
-        <meta name="twitter:creator" content="@C14Lcom">
-        
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="">
-        <meta property="og:url" content="">
-        <meta property="og:description" content="">
-        <meta property="og:image" content="">
-        <meta property="og:site_name" content="">
+        <link rel="stylesheet" href="/memory2/main.css">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="canonical" href="/memory2/">
+        <link rel="import" href="/memory2/app-counter.html">
     </head>
     <body lang="en">
-        <header>
-            
-        </header>        
         <main>
-            <app-cards count="24" pics="cat, dog, elephant, giraffe, hippo, kudu, monkey, panda, pig, seal, squirrel, zebra"></app-cards>
+            <app-cards count="24" pics="cat dog elephant giraffe hippo kudu monkey panda pig seal squirrel zebra"></app-cards>
             <app-counter count="0" match="0" time="0"></app-counter>
         </main>
-        <footer>
-            &copy; 2016 &mdash; 
-            <a href="https://C14L.com/impressum.html">Impressum - Datenschutz - Kontakt</a>
-        </footer>
     </body>
-    <script src="app-cards.js"></script>
-    <script src="app-card.js"></script>
+    <!-- TODO: Use importable .html files instead. -->
+    <script src="/memory2/app-cards.js"></script>
+    <script src="/memory2/app-card.js"></script>
+    <script>
+
+/**
+ * Install ServiceWorker.
+ */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js', {scope: './'}).then(function(reg) {
+        console.log('main.js --> ServiceWorker was installed:', reg);
+    }).catch(function(err) {
+        console.error('main.js --> ServiceWorker installation error:', err);
+    });
+} else {
+    console.log('main.js --> Browser does not support ServiceWorker.');
+}
+
+    </script>
 </html>
