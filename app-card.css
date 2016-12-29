@@ -1,10 +1,31 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
 :host {
-    --card-width: 120px;
+    --flip-card-speed: 0.8s;
+    --card-border: 5px;
+    --card-gap: 0px;
+    --card-count: 4;
+    --card-width: calc( 100vw / var(--card-count) );
 
     width: var(--card-width);
     height: var(--card-width);
     display: block;
-    margin: 5px;
+    margin: var(--card-gap);
+}
+
+@media only screen and (min-width: 600px) {
+    :host {
+        --card-count: 6;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    :host {
+        width: calc( 1000px / 6 );
+        height: calc( 1000px / 6 );
+    }
 }
 
 #card {
@@ -12,8 +33,6 @@
     width: inherit; 
     height: inherit;
     position: relative;
-    --flip-card-speed: 0.8s;
-    --card-border: 5px;
 }
 
 #front, #back {

@@ -3,13 +3,19 @@
 }
 
 body {
-    background-color: lightgoldenrodyellow;
-    padding: 20px;
-    --card-width: 120px;
+    background-repeat: repeat;
+    background-position: center center;
+    background-image: repeating-linear-gradient(25deg, green, blue, yellow, white, red, indigo, black);
+    padding: 0; margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
     --card-count: 4;
+    --card-width: calc( ( 100vw / var(--card-count) ) );
 }
 
-@media only screen and (min-width: 850px) {
+@media only screen and (min-width: 600px) {
     body {
         --card-count: 6;
     }
@@ -17,11 +23,10 @@ body {
 
 app-cards {
     margin: 0 auto;
-    box-sizing: content-box;
+    padding: 0;
     display: flex;
     flex-flow: row wrap;
-    border: 2px solid lightgreen;
-    width: calc( ( var(--card-width) + 10px) * var(--card-count) );
+    width: calc( var(--card-count) * var(--card-width) );
 }
 
 app-card {
@@ -30,3 +35,12 @@ app-card {
     height: var(--card-width);
 }
 
+@media only screen and (min-width: 1000px) {
+    app-cards {
+        width: 1000px;
+    }
+    app-card {
+        width: calc( 1000px / 6 );
+        height: calc( 1000px / 6 );
+    }
+}

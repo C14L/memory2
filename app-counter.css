@@ -1,0 +1,32 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+#counter {
+    display: flex;
+    flex-flow: 0 0 auto;
+    position: fixed;
+    right: 0; bottom: 0; left: 0;
+    background-color: black;
+    opacity: 0.7;
+    font-family: sans-serif;
+    font-size: 48px;
+    line-height: 96px;
+    color: white;
+    text-align: center;
+}
+
+@media only screen and (min-width: 600px) {
+    #counter {
+        font-size: 32px;
+        line-height: 40px;
+    }
+}
+
+#counter > div {
+    width: 33%;
+}
+
+#counter > div + div {
+    border-left: 1px dotted rgba(255,255,255,0.48);
+}

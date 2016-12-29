@@ -1,5 +1,5 @@
 
-const SW_VERSION = '2.3';
+const SW_VERSION = '2.4';
 const SW_ACTIVE = true;
 const SW_LOG_PREFIX = 'SW' + SW_VERSION + ' --> ';
 const SW_CACHE = 'memory' + SW_VERSION;
@@ -11,6 +11,7 @@ const FILES = [
         BASEPATH + 'app-card.css ',
         BASEPATH + 'app-card.js',
         BASEPATH + 'app-cards.js',
+        BASEPATH + 'app-counter.css',
         BASEPATH + 'app-counter.html',
         BASEPATH + 'favicon.ico',
         BASEPATH + 'index.html', 
