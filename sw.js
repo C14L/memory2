@@ -1,10 +1,10 @@
 
-const SW_VERSION = '2.4';
+const SW_VERSION = '2.6';
 const SW_ACTIVE = true;
 const SW_LOG_PREFIX = 'SW' + SW_VERSION + ' --> ';
 const SW_CACHE = 'memory' + SW_VERSION;
 
-const BASEPATH = '/memory2/';
+const BASEPATH = '/memory/2/';
 const ITEMSTRING = 'cat dog elephant giraffe hippo kudu monkey panda pig seal squirrel zebra';
 const FILES = [
         BASEPATH, 
@@ -20,6 +20,7 @@ const FILES = [
         BASEPATH + 'launcher-icon-3x.png', 
         BASEPATH + 'launcher-icon-4x.png', 
         BASEPATH + 'main.css',
+        BASEPATH + 'manifest.json',
     ].concat(get_pic_names(ITEMSTRING));
 
 if (SW_ACTIVE) {

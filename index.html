@@ -8,10 +8,11 @@
 
         <title>Memory2</title>
         
-        <link rel="stylesheet" href="/memory2/main.css">
-        <link rel="shortcut icon" href="/favicon.ico">
-        <link rel="canonical" href="/memory2/">
-        <link rel="import" href="/memory2/app-counter.html">
+        <link rel="canonical"     href="/memory/2/">
+        <link rel="import"        href="/memory/2/app-counter.html">
+        <link rel="manifest"      href="/memory/2/manifest.json">
+        <link rel="shortcut icon" href="/memory/2/favicon.ico">
+        <link rel="stylesheet"    href="/memory/2/main.css">
     </head>
     <body lang="en">
         <main>
@@ -20,15 +21,15 @@
         </main>
     </body>
     <!-- TODO: Use "import .html" files instead. -->
-    <script src="/memory2/app-cards.js"></script>
-    <script src="/memory2/app-card.js"></script>
+    <script src="/memory/2/app-cards.js"></script>
+    <script src="/memory/2/app-card.js"></script>
     <script>
 
 /**
  * Install ServiceWorker.
  */
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js', {scope: './'}).then(function(reg) {
+    navigator.serviceWorker.register('/memory/2/sw.js', {scope: '/memory/2/'}).then(function(reg) {
         console.log('main.js --> ServiceWorker was installed:', reg);
     }).catch(function(err) {
         console.error('main.js --> ServiceWorker installation error:', err);
