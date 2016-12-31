@@ -1,40 +1,44 @@
 
-const SW_VERSION = '2.7';
+const SW_VERSION = '2.8';
+const SW_MV = SW_VERSION.split('.')[0]; // major version number
 const SW_ACTIVE = true;
 const SW_LOG_PREFIX = 'SW' + SW_VERSION + ' --> ';
-const SW_CACHE = 'memory' + SW_VERSION;
+const SW_CACHE = 'memory' + SW_MV;
 
-const BASEPATH = '/memory/2/';
+const BASEPATH = '/memory/' + SW_MV + '/';
 const ITEMSTRING = 'cat dog elephant giraffe hippo kudu monkey panda pig seal squirrel zebra';
-const FILES = [
+const FILES = get_pic_names(ITEMSTRING).concat([
         BASEPATH, 
         BASEPATH + 'app-card.css ',
         BASEPATH + 'app-card.js',
         BASEPATH + 'app-cards.js',
         BASEPATH + 'app-counter.css',
         BASEPATH + 'app-counter.html',
-        BASEPATH + 'favicon.ico',
+        BASEPATH + '../favicon.ico',
         BASEPATH + 'index.html', 
         BASEPATH + 'launcher-icon.png', 
         BASEPATH + 'launcher-icon-2x.png', 
         BASEPATH + 'launcher-icon-3x.png', 
         BASEPATH + 'launcher-icon-4x.png', 
         BASEPATH + 'main.css',
-        // BASEPATH + 'manifest.json',
-    ].concat(get_pic_names(ITEMSTRING));
+    ]);
 
 if (SW_ACTIVE) {
     console.log(SW_LOG_PREFIX + 'ServiceWorker active.');
 
     self.addEventListener('install', event => {
         caches.open(SW_CACHE).then(cache => cache.addAll(FILES));
+        self.skipWaiting();
     });
+
     self.addEventListener('activate', event => {
         console.log(SW_LOG_PREFIX + 'ServiceWorker activate.');
     });
+
     self.addEventListener('fetch', event => {
         event.respondWith(caches.match(event.request) || fetch(event.request));
     });
+
 } else {
     console.log(SW_LOG_PREFIX + 'ServiceWorker turned OFF.');
 }
