@@ -1,5 +1,5 @@
 
-const SW_VERSION = '2.6';
+const SW_VERSION = '2.7';
 const SW_ACTIVE = true;
 const SW_LOG_PREFIX = 'SW' + SW_VERSION + ' --> ';
 const SW_CACHE = 'memory' + SW_VERSION;
@@ -20,7 +20,7 @@ const FILES = [
         BASEPATH + 'launcher-icon-3x.png', 
         BASEPATH + 'launcher-icon-4x.png', 
         BASEPATH + 'main.css',
-        BASEPATH + 'manifest.json',
+        // BASEPATH + 'manifest.json',
     ].concat(get_pic_names(ITEMSTRING));
 
 if (SW_ACTIVE) {
@@ -33,7 +33,7 @@ if (SW_ACTIVE) {
         console.log(SW_LOG_PREFIX + 'ServiceWorker activate.');
     });
     self.addEventListener('fetch', event => {
-        event.respondWith(caches.match(event.request));
+        event.respondWith(caches.match(event.request) || fetch(event.request));
     });
 } else {
     console.log(SW_LOG_PREFIX + 'ServiceWorker turned OFF.');
