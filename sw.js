@@ -1,7 +1,8 @@
 
-const SW_VERSION = '2.8';
-const SW_MV = SW_VERSION.split('.')[0]; // major version number
 const SW_ACTIVE = true;
+const SW_VERSION = '2.16';
+
+const SW_MV = SW_VERSION.split('.')[0]; // major version number
 const SW_LOG_PREFIX = 'SW' + SW_VERSION + ' --> ';
 const SW_CACHE = 'memory' + SW_MV;
 
@@ -9,30 +10,37 @@ const BASEPATH = '/memory/' + SW_MV + '/';
 const ITEMSTRING = 'cat dog elephant giraffe hippo kudu monkey panda pig seal squirrel zebra';
 const FILES = get_pic_names(ITEMSTRING).concat([
         BASEPATH, 
-        BASEPATH + 'app-card.css ',
-        BASEPATH + 'app-card.js',
-        BASEPATH + 'app-cards.js',
-        BASEPATH + 'app-counter.css',
-        BASEPATH + 'app-counter.html',
         BASEPATH + '../favicon.ico',
+
+        BASEPATH + 'main.js',
+        BASEPATH + 'pubsub.js',
+
         BASEPATH + 'index.html', 
+        BASEPATH + 'app-card.html',
+        BASEPATH + 'app-cards.html',
+        BASEPATH + 'app-counter.html',
+
+        BASEPATH + 'main.css',
+        BASEPATH + 'app-card.css',
+        BASEPATH + 'app-counter.css',
+
         BASEPATH + 'launcher-icon.png', 
         BASEPATH + 'launcher-icon-2x.png', 
         BASEPATH + 'launcher-icon-3x.png', 
         BASEPATH + 'launcher-icon-4x.png', 
-        BASEPATH + 'main.css',
     ]);
 
 if (SW_ACTIVE) {
-    console.log(SW_LOG_PREFIX + 'ServiceWorker active.');
+    console.log(SW_LOG_PREFIX + 'ServiceWorker is ON.');
 
     self.addEventListener('install', event => {
+        console.log(SW_LOG_PREFIX + 'ServiceWorker install event.');
         caches.open(SW_CACHE).then(cache => cache.addAll(FILES));
         self.skipWaiting();
     });
 
     self.addEventListener('activate', event => {
-        console.log(SW_LOG_PREFIX + 'ServiceWorker activate.');
+        console.log(SW_LOG_PREFIX + 'ServiceWorker activate event.');
     });
 
     self.addEventListener('fetch', event => {
@@ -40,7 +48,7 @@ if (SW_ACTIVE) {
     });
 
 } else {
-    console.log(SW_LOG_PREFIX + 'ServiceWorker turned OFF.');
+    console.log(SW_LOG_PREFIX + 'ServiceWorker is OFF.');
 }
 
 function get_pic_names(itemstring) {

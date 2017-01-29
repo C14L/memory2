@@ -8,6 +8,7 @@
 
         <title>Memory2</title>
 
+        <script src="/memory/2/main.js"></script>
         <script src="/memory/2/pubsub.js"></script>
         
         <link rel="canonical"     href="/memory/2/">
@@ -24,23 +25,4 @@
             <app-counter count="0" match="0" time="0"></app-counter>
         </main>
     </body>
-    <!-- TODO: Use "import .html" files instead. -->
-    <!-- <sXXXcript src="/memory/2/app-cards.js"></scrXXXipt> -->
-    <!-- <sXXXcript src="/memory/2/app-card.js"></scriXXpt> -->
-    <script>
-
-/**
- * Install ServiceWorker.
- */
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/memory/2/sw.js', {scope: '/memory/2/'}).then(function(reg) {
-        console.log('main.js --> ServiceWorker was installed:', reg);
-    }).catch(function(err) {
-        console.error('main.js --> ServiceWorker installation error:', err);
-    });
-} else {
-    console.log('main.js --> Browser does not support ServiceWorker.');
-}
-
-    </script>
 </html>
