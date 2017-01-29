@@ -99,8 +99,8 @@ customElements.define('app-cards', class extends HTMLElement {
                     // After removing the pair, check if we have any cards left.
                     if (this.cardsCount === 0) {
                         pubsub.pub('timerstop');
-                        pubsub.pub('gamedone');
-                    }                    
+                        pubsub.pub('gameover');
+                    }
                 }
             } else {
                 // The timer checks to only start once.

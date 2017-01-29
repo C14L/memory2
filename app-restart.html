@@ -1,0 +1,84 @@
+<template>
+    <style>
+
+#btn-container {
+    display: none;
+}
+
+#btn-container.show {
+    display: block;
+}
+
+#btn-container.show > #bg {
+    position: fixed; top: 0; right: 0; bottom: 0; left: 0;
+    background: rgba(0,0,0,0.64);
+}
+
+#btn-container.show > #btn {
+    background: darkred;
+    border: 5px solid yellow;
+    border-radius: 8px;
+    box-shadow: 0 30px 30px -15px rgba(255,255,255,0.5) inset,
+                0 0 30px 10px rgba(255,255,255,0.48);
+    color: yellow;
+    display: inline-block;
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font: normal small-caps bold 24px/1 sans-serif;
+    padding: 30px 50px; margin: 0;
+}
+
+#btn-container.show > #btn:active {
+    box-shadow: 0 -15px 15px -7px rgba(255,255,255,0.5) inset,
+                0 0 300px 100px rgba(255,255,255,0.48);
+}
+
+    </style>
+    <div id="btn-container">
+        <div id="bg"></div>
+        <button id="btn">Start</button>        
+    </div>
+</template>
+
+<script>
+
+'use strict';
+
+customElements.define('app-restart', class extends HTMLElement {
+
+    static get observedAttributes () {
+        return [];
+    }
+
+    constructor () {
+        super();
+
+        const doc = document.currentScript.ownerDocument;
+        const tpl = doc.querySelector('template');
+
+        this._shadowRoot = this.attachShadow({mode: 'open'});
+        this._shadowRoot.appendChild(tpl.content.cloneNode(true));
+    }
+
+    connectedCallback () {
+
+        this._container = this._shadowRoot.children['btn-container'];
+        this._button = this._container.children['btn'];
+
+        this._button.addEventListener('click', event => {
+            window.location.reload();
+        });
+
+        pubsub.sub('gameover', () => {
+            this._container.classList.add('show');
+        });
+    }
+
+    disconnectedCallback () {
+    }
+
+    attributeChangedCallback (name, oldValue, newValue) {
+    }
+});
+
+</script>

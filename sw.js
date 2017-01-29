@@ -1,6 +1,6 @@
 
 const SW_ACTIVE = true;
-const SW_VERSION = '2.16';
+const SW_VERSION = '2.32';
 
 const SW_MV = SW_VERSION.split('.')[0]; // major version number
 const SW_LOG_PREFIX = 'SW' + SW_VERSION + ' --> ';
@@ -19,6 +19,7 @@ const FILES = get_pic_names(ITEMSTRING).concat([
         BASEPATH + 'app-card.html',
         BASEPATH + 'app-cards.html',
         BASEPATH + 'app-counter.html',
+        BASEPATH + 'app-restart.html',
 
         BASEPATH + 'main.css',
         BASEPATH + 'app-card.css',
@@ -35,7 +36,18 @@ if (SW_ACTIVE) {
 
     self.addEventListener('install', event => {
         console.log(SW_LOG_PREFIX + 'ServiceWorker install event.');
-        caches.open(SW_CACHE).then(cache => cache.addAll(FILES));
+
+        // Delete all existing files from cache, then add new files.
+        event.waitUntil(
+            caches.open(SW_CACHE).then(cache => {
+                cache.keys().then(keys => {
+                    keys.forEach(req => cache.delete(req));
+                }).then(() => {
+                    cache.addAll(FILES);
+                });
+            })
+        );
+
         self.skipWaiting();
     });
 
