@@ -21,7 +21,7 @@ var pubsub = (function () {
             if (!_events.hasOwnProperty(eventName)) {
                 _events[eventName] = [];
             }
-            console.log('pubsub: for event '+eventName+' add '+listener);
+
             _events[eventName].push(listener);
         },
 
