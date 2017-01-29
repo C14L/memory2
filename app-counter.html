@@ -1,4 +1,3 @@
-
 <template>
     <link rel="stylesheet" href="/memory/2/app-counter.css">
     <div id="counter">
@@ -10,7 +9,7 @@
 
 <script>
 
-"use strict";
+'use strict';
 
 customElements.define('app-counter', class extends HTMLElement {
 
@@ -28,6 +27,24 @@ customElements.define('app-counter', class extends HTMLElement {
         this._countEl = this._shadowRoot.getElementById('count');
         this._matchEl = this._shadowRoot.getElementById('match');
         this._timeEl = this._shadowRoot.getElementById('time');
+
+        this.timerIntervalHandle = null;
+        this.countPairs = 0;
+        this.countMatches = 0;
+
+        pubsub.sub('timerstart', this.startTimer.bind(this));
+        pubsub.sub('timerstop', this.stopTimer.bind(this));
+        pubsub.sub('gamedone', this.gameDone.bind(this));
+
+        pubsub.sub('countpair', () => {
+            this.countPairs += 1;
+            this._countEl.innerHTML = this.countPairs;
+        });
+
+        pubsub.sub('countmatch', () => {
+            this.countMatches += 1;
+            this._matchEl.innerHTML = this.countMatches;
+        });
     }
 
     connectedCallback () {
@@ -37,22 +54,25 @@ customElements.define('app-counter', class extends HTMLElement {
     }
 
     attributeChangedCallback (name, oldValue, newValue) {
-        if (name === 'count') {
-            this._countEl.innerHTML = newValue;
-        }
-        if (name === 'match') {
-            this._matchEl.innerHTML = newValue;
-        }
-        if (name === 'time' && newValue == "1") {
-            this.startTimer();
+        // use pubsub signals instead.
+    }
+
+    stopTimer () {
+        if (this.timerIntervalHandle) {
+            clearInterval(this.timerIntervalHandle);
+            this.timerIntervalHandle = null;
         }
     }
 
     startTimer () {
+        if (this.timerIntervalHandle) return; // only start it once.
         let t = 0;
-        setInterval(() => { this._timeEl.innerHTML = ++t; }, 1000);
+        this.timerIntervalHandle = setInterval(() => { this._timeEl.innerHTML = ++t; }, 1000);
     }
 
+    gameDone () {
+        console.log('PLAY GAME DONE ANIMATION NOW...');
+    }
 });
 
 </script>
